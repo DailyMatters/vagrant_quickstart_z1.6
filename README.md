@@ -63,7 +63,7 @@ end
 # End here
 ```
 
-After this point you can serve the code by using PHP built in server. Just access the VM using `vagrant ssh`, navigate to the root of your code and execute `php -S 192.168.33.10:8000`.
+After this point you can serve the code by using [PHP built in server](https://www.php.net/manual/en/features.commandline.webserver.php). Just access the VM using `vagrant ssh`, navigate to the root of your code and execute `php -S 192.168.33.10:8000`.
 
 ----
 
