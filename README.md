@@ -28,7 +28,7 @@ This way you can work the files in your computer while still having access to a 
 
 To follow this alternative follow steps 1 and 2 just like in the previous example.
 
-Instead of creating the box from scratch, replace the VagrantFile contents with the content below. This file will provision everything needed (including the framework itself) to start working.
+Instead of creating the box from scratch, create a new folder for your project and run `vagrant init`. Then replace the VagrantFile contents with the content below. This file will provision everything needed (including the framework itself) to start working.
 
 ```ruby
 # Copy below this point
