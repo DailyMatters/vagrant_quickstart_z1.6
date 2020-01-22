@@ -67,8 +67,63 @@ After this point you can serve the code by using [PHP built in server](https://w
 
 ----
 
-If you want to strip Zend framework to a bare minimum, delete the demos, externals, laboratory and tests folders. For now, we can do grest with just the library folder which contains all the Zend Framework code.
+If you want to strip Zend framework to a bare minimum, delete the demos, externals, laboratory and tests folders. For now, we can do great with just the library folder which contains all the Zend Framework code.
 
 You can also download the [full documentation here](https://packages.zendframework.com/releases/ZendFramework-1.6.2/ZendFramework-1.6.2-manual-en.zip). It will help you understanding better each component, their functionality and their use.
 
-From this point on, please follow the pdf file and have fun! 
+From this point on, please follow the pdf file and have fun!
+
+----
+
+#### Liquibase support
+
+If you want [Liquibase](https://www.liquibase.org/) support use the code block below instead to provision your machine:
+
+```ruby
+# Copy below this point
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  
+  config.vm.box = "levelten/ubuntu64-php5.6"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+   config.vm.provision "shell", inline: <<-SHELL
+     apt-get update
+     apt-get install -y unzip
+     apt-get install -y sqlite3
+     apt-get install -y openjdk-8-jre-headless
+     wget https://packages.zendframework.com/releases/ZendFramework-1.6.2/ZendFramework-1.6.2.zip
+     unzip ZendFramework-1.6.2.zip
+     rm ZendFramework-1.6.2.zip
+     mkdir liquibase
+     cd liquibase
+     wget https://github.com/liquibase/liquibase/releases/download/v3.8.5/liquibase-3.8.5.tar.gz
+     tar -zxvf liquibase-3.8.5.tar.gz
+     rm liquibase-3.8.5.tar.gz
+     echo 'export PATH="${PATH}:/home/vagrant/liquibase"' >> /home/vagrant/.bashrc
+     source /home/vagrant/.bashrc
+     wget https://bitbucket.org/xerial/sqlite-jdbc/downloads/sqlite-jdbc-3.30.1.jar
+   SHELL
+end
+
+# End here
+```
+
+Let's take a quick look. On the box above we were only downloading and giving access to Zend Framework 1.6. On this box we're doing a little more. We're installing Openjdk because we'll need it for Liquibase. We're also installing sqlite3 so we can have a database engine to work some examples with Liquibase. Lastly, we're installing Liquibase and adding the executable and adding it to the path so it's available everywhere on the machine.
+
+So, after provisioning this machine, use `vagrant ssh` to access the machine and then try running `liquibase --help`. You should see the liquibase help prompt.
+
+This box build on the last one, so everything that's available on the first, is also available on this one. Consider this one as being version 2.0.
