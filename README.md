@@ -67,7 +67,7 @@ After this point you can serve the code by using [PHP built in server](https://w
 
 ----
 
-If you want to strip Zend framework to a bare minimum, delete the demos, externals, laboratory and tests folders. For now, we can do great with just the library folder which contains all the Zend Framework code.
+If you want to strip Zend framework to a bare minimum, delete the demos (although you get bonus points if you can run all the demos and understand the code inside), externals, laboratory and tests folders. For now, we can do great with just the library folder which contains all the Zend Framework code.
 
 You can also download the [full documentation here](https://packages.zendframework.com/releases/ZendFramework-1.6.2/ZendFramework-1.6.2-manual-en.zip). It will help you understanding better each component, their functionality and their use.
 
