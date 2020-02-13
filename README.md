@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
      # Create a database
      mysql -uroot -e "CREATE DATABASE IF NOT EXISTS zftest;"
      mysql -uroot -e "use zftest; CREATE TABLE IF NOT EXISTS albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
-     mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Kepp it Simple');"
+     mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Keep it Simple');"
    SHELL
 end
 
@@ -45,6 +45,20 @@ end
 ```
 
 This will allow us to launch the webserver on the ip above (`192.168.33.10`). It also creates the database needed to run the code from the tutorial.
+
+The actual credentials that you need to insert into the `config.ini` file are the following:
+
+`
+zf-tutorial/application/config.ini
+[general]
+db.adapter = PDO_MYSQL
+db.params.host = localhost
+db.params.username = root
+db.params.password =
+db.params.dbname = zftest
+`
+
+Add these in the `Database` section of the tutorial.
 
 5 - Run `vagrant up` to download the resources and fire the VM.
 
@@ -91,9 +105,9 @@ Vagrant.configure("2") do |config|
      rm ZendFramework-1.6.2.zip
 
      # Create a database
-     mysql -uroot -e "create database if not exists zftest;"
-     mysql -uroot -e "use zftest; CREATE TABLE if not exists albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
-     mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Kepp it Simple');"
+     mysql -uroot -e "CREATE DATABASE IF NOT EXISTS zftest;"
+     mysql -uroot -e "use zftest; CREATE TABLE IF NOT EXISTS albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
+     mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Keep it Simple');"
    SHELL
 end
 
@@ -155,9 +169,9 @@ Vagrant.configure("2") do |config|
      wget https://bitbucket.org/xerial/sqlite-jdbc/downloads/sqlite-jdbc-3.30.1.jar
 
      # Create a database
-     mysql -uroot -e "create database if not exists zftest;"
-     mysql -uroot -e "use zftest; CREATE TABLE if not exists albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
-     mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Kepp it Simple');"
+     mysql -uroot -e "CREATE DATABASE IF NOT EXISTS zftest;"
+     mysql -uroot -e "use zftest; CREATE TABLE IF NOT EXISTS albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
+     mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Keep it Simple');"
    SHELL
 end
 
