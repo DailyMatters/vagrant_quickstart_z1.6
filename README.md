@@ -58,7 +58,7 @@ db.params.password =
 db.params.dbname = zftest
 ```
 
-Add these in the `Database` section of the tutorial.
+Add these when you reach the `Database` section of the tutorial.
 
 5 - Run `vagrant up` to download the resources and fire the VM.
 
