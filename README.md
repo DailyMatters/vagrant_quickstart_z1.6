@@ -35,8 +35,8 @@ Vagrant.configure("2") do |config|
      apt-get update
 
      # Create a database
-     mysql -uroot -e "create database if not exists zftest;"
-     mysql -uroot -e "use zftest; CREATE TABLE if not exists albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
+     mysql -uroot -e "CREATE DATABASE IF NOT EXISTS zftest;"
+     mysql -uroot -e "use zftest; CREATE TABLE IF NOT EXISTS albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
      mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Kepp it Simple');"
    SHELL
 end
