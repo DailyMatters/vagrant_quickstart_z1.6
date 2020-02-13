@@ -48,7 +48,7 @@ This will allow us to launch the webserver on the ip above (`192.168.33.10`). It
 
 The actual credentials that you need to insert into the `config.ini` file are the following:
 
-`
+```c
 zf-tutorial/application/config.ini
 [general]
 db.adapter = PDO_MYSQL
@@ -56,7 +56,7 @@ db.params.host = localhost
 db.params.username = root
 db.params.password =
 db.params.dbname = zftest
-`
+```
 
 Add these in the `Database` section of the tutorial.
 
