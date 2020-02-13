@@ -6,13 +6,45 @@
 
 2 - Download and install Vagrant (if you're not familiar with vagrant please read the [documentation first](https://www.vagrantup.com/docs/)).
 
-3 - Create  folder for your new project and run `vagrant init levelten/ubuntu64-php5.6` to initialize a new vagrant box.
+3 - Create folder for your new project and run `vagrant init levelten/ubuntu64-php5.6` to initialize a new vagrant box.
 
-4 - Open the `Vagrantfile` file and uncomment the following line:
+4 - Open the `Vagrantfile` file and replace it with the following:
 
-`# config.vm.network "private_network", ip: "192.168.33.10"`
+```ruby
+# Copy below this point
 
-This will allow us to launch the webserver on the ip above.
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "levelten/ubuntu64-php5.6"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+   config.vm.provision "shell", inline: <<-SHELL
+     apt-get update
+
+     # Create a database
+     mysql -uroot -e "create database if not exists zftest;"
+     mysql -uroot -e "use zftest; CREATE TABLE if not exists albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
+     mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Kepp it Simple');"
+   SHELL
+end
+
+# End here
+```
+
+This will allow us to launch the webserver on the ip above (`192.168.33.10`). It also creates the database needed to run the code from the tutorial.
 
 5 - Run `vagrant up` to download the resources and fire the VM.
 
@@ -41,7 +73,7 @@ Instead of creating the box from scratch, create a new folder for your project a
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  
+
   config.vm.box = "levelten/ubuntu64-php5.6"
 
   # Create a private network, which allows host-only access to the machine
@@ -57,6 +89,11 @@ Vagrant.configure("2") do |config|
      wget https://packages.zendframework.com/releases/ZendFramework-1.6.2/ZendFramework-1.6.2.zip
      unzip ZendFramework-1.6.2.zip
      rm ZendFramework-1.6.2.zip
+
+     # Create a database
+     mysql -uroot -e "create database if not exists zftest;"
+     mysql -uroot -e "use zftest; CREATE TABLE if not exists albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
+     mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Kepp it Simple');"
    SHELL
 end
 
@@ -90,7 +127,7 @@ If you want [Liquibase](https://www.liquibase.org/) support use the code block b
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  
+
   config.vm.box = "levelten/ubuntu64-php5.6"
 
   # Create a private network, which allows host-only access to the machine
@@ -116,6 +153,11 @@ Vagrant.configure("2") do |config|
      echo 'export PATH="${PATH}:/home/vagrant/liquibase"' >> /home/vagrant/.bashrc
      source /home/vagrant/.bashrc
      wget https://bitbucket.org/xerial/sqlite-jdbc/downloads/sqlite-jdbc-3.30.1.jar
+
+     # Create a database
+     mysql -uroot -e "create database if not exists zftest;"
+     mysql -uroot -e "use zftest; CREATE TABLE if not exists albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
+     mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Kepp it Simple');"
    SHELL
 end
 
