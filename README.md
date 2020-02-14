@@ -32,12 +32,33 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
    config.vm.provision "shell", inline: <<-SHELL
+     GREEN='\033[0;32m'
+     NC='\033[0m' # No Color
+
      apt-get update
+
+     # Get java for liquibase
+     apt-get install -y openjdk-8-jre-headless
+
+     printf "${GREEN}Start Provisioning Liquibase${NC}\n"
+
+     # Get liquibase
+     mkdir liquibase
+     cd liquibase
+     wget https://github.com/liquibase/liquibase/releases/download/v3.8.5/liquibase-3.8.5.tar.gz
+     tar -zxvf liquibase-3.8.5.tar.gz
+     rm liquibase-3.8.5.tar.gz
+     echo 'export PATH="${PATH}:/home/vagrant/liquibase"' >> /home/vagrant/.bashrc
+     source /home/vagrant/.bashrc
+
+     printf "${GREEN}Start Provisioning Database Structure and fields.${NC}\n"
 
      # Create a database
      mysql -uroot -e "CREATE DATABASE IF NOT EXISTS zftest;"
      mysql -uroot -e "use zftest; CREATE TABLE IF NOT EXISTS albums (id int(11) NOT NULL auto_increment, artist varchar(100) NOT NULL, title varchar(100) NOT NULL, PRIMARY KEY (id));"
      mysql -uroot -e "use zftest; INSERT INTO albums (artist, title) VALUES ('Duffy','Rockferry'), ('Van Morrison', 'Keep it Simple');"
+
+     printf "${GREEN}Finished Provisioning.${NC}\n"
    SHELL
 end
 
@@ -59,6 +80,8 @@ db.params.dbname = zftest
 ```
 
 Add these when you reach the `Database` section of the tutorial.
+
+Please note that we're also installing jre and liquibase, this might be useful if you want to explore Liquibase later on.
 
 5 - Run `vagrant up` to download the resources and fire the VM.
 
